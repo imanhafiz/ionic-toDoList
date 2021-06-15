@@ -13,20 +13,20 @@
 
   <ion-card *ngFor="let item of todoList; let i = index" class="ion-margin">
     <ion-card-header>
-      <ion-card-subtitle [style.color]="item.itemPriority == 'High' ? 'red' : (item.itemPriority == 'Low' ? 'green' : 'orange')">
+      <ion-card-subtitle [style.color]="item.value.itemPriority == 'High' ? 'red' : (item.value.itemPriority == 'Low' ? 'green' : 'orange')">
       {{item.itemCategory}}
       </ion-card-subtitle>
 
       <ion-item>
-        <ion-icon *ngIf="item.itemPriority === 'High'" color="danger" size="small" name="ellipse"></ion-icon>
-        <ion-icon *ngIf="item.itemPriority === 'Low'" color="success" size="small" name="ellipse"></ion-icon>
-        <ion-icon *ngIf="item.itemPriority === 'Middle'" color="warning" size="small" name="ellipse"></ion-icon>
-        <ion-label> {{ item.itemName}}</ion-label>
+        <ion-icon *ngIf="item.value.itemPriority === 'High'" color="danger" size="small" name="ellipse"></ion-icon>
+        <ion-icon *ngIf="item.value.itemPriority === 'Low'" color="success" size="small" name="ellipse"></ion-icon>
+        <ion-icon *ngIf="item.value.itemPriority === 'Middle'" color="warning" size="small" name="ellipse"></ion-icon>
+        <ion-label> {{ item.value.itemName}}</ion-label>
       </ion-item>
     </ion-card-header>
 
     <ion-card-content>
-      <ion-label>Due {{item.itemDueDate}}</ion-label>
+      <ion-label>Due {{item.value.itemDueDate}}</ion-label>
     </ion-card-content>
 
     <ion-row>
@@ -41,7 +41,7 @@
         <p>Complete</p>
       </ion-item>
 
-      <ion-item button (click)="delete(i)">
+      <ion-item button (click)="delete(item.key)">
         <ion-icon name="trash-outline"></ion-icon>
         <p>Cancel</p>
       </ion-item>

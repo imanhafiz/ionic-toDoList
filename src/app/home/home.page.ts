@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { AddNewTaskPage } from '../add-new-task/add-new-task.page';
 import { TodoService } from '../todo.service';
 
@@ -24,8 +25,7 @@ today: number = Date.now();
     })
 
     modal.onDidDismiss().then(newTaskObj =>{
-      // console.log(newTaskObj.data);
-      // this.todoList.push(newTaskObj.data)
+      this.getAllTask();
     })
     return await modal.present()
   }
@@ -36,8 +36,11 @@ today: number = Date.now();
 
   }
 
-  delete(index){
-    this.todoList.splice(index,1)
+  delete(key){
+    console.log(key);
+    this.todoService.deleteTask(key);
+    this.getAllTask();
+    //this.todoList.splice(index,1)
   }
 
 }

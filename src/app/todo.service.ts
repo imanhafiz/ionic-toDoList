@@ -14,8 +14,8 @@ export class TodoService {
     this.storage.set(key, value);
   }
 
-  deleteTask(){
-
+  deleteTask(key){
+    this.storage.remove(key);
   }
 
   updateTask(){
