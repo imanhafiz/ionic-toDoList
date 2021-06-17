@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+import { AddNewTaskPage } from '../add-new-task/add-new-task.page';
+import { TodoService } from '../todo.service';
+import { UpdateTaskPage } from '../update-task/update-task.page';
 
 @Component({
   selector: 'app-home',
@@ -7,28 +12,44 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  todoList = [{
-    itemName : 'Codimg',
-    itemDueDate: '13-10-21',
-    itemPriority: 'high',
-    itemCategory : 'Work'
-  },
-  {
-    itemName : 'Design',
-    itemDueDate: '28-10-21',
-    itemPriority: 'low',
-    itemCategory : 'Work'
-  },
-  {
-    itemName : 'Shopping',
-    itemDueDate: '13-10-21',
-    itemPriority: 'middle',
-    itemCategory : 'Personal'
-  }
-]
+  todoList = []
 
 today: number = Date.now();
 
-  constructor() {}
+  constructor(public modalCtrl:ModalController, public todoService: TodoService) {
+    this.getAllTask();
+  }
+
+  async addTask() {
+    const modal = await this.modalCtrl.create({
+      component: AddNewTaskPage
+    })
+
+    modal.onDidDismiss().then(newTaskObj =>{
+      this.getAllTask();
+    })
+    return await modal.present()
+  }
+
+  getAllTask(){
+    this.todoList = this.todoService.getAllTasks();
+    console.log(this.todoService.getAllTasks());
+
+  }
+
+  delete(key){
+    console.log(key);
+    this.todoService.deleteTask(key);
+    this.getAllTask()
+
+  }
+
+  async update(){
+    const modal = await this.modalCtrl.create({
+      component: UpdateTaskPage
+    })
+
+    return await modal.present()
+  };
 
 }
