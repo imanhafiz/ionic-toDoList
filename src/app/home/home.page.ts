@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { AddNewTaskPage } from '../add-new-task/add-new-task.page';
 import { TodoService } from '../todo.service';
+import { UpdateTaskPage } from '../update-task/update-task.page';
 
 @Component({
   selector: 'app-home',
@@ -39,8 +40,16 @@ today: number = Date.now();
   delete(key){
     console.log(key);
     this.todoService.deleteTask(key);
-    this.getAllTask();
-    //this.todoList.splice(index,1)
+    this.getAllTask()
+
   }
+
+  async update(){
+    const modal = await this.modalCtrl.create({
+      component: UpdateTaskPage
+    })
+
+    return await modal.present()
+  };
 
 }
